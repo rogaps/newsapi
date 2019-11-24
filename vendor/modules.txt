@@ -1,0 +1,56 @@
+# github.com/caarlos0/env/v6 v6.1.0
+github.com/caarlos0/env/v6
+# github.com/elastic/go-elasticsearch/v7 v7.4.1
+github.com/elastic/go-elasticsearch/v7
+github.com/elastic/go-elasticsearch/v7/esapi
+github.com/elastic/go-elasticsearch/v7/estransport
+github.com/elastic/go-elasticsearch/v7/esutil
+github.com/elastic/go-elasticsearch/v7/internal/version
+# github.com/go-redis/cache/v7 v7.0.2
+github.com/go-redis/cache/v7
+github.com/go-redis/cache/v7/internal
+github.com/go-redis/cache/v7/internal/lrucache
+github.com/go-redis/cache/v7/internal/singleflight
+# github.com/go-redis/redis/v7 v7.0.0-beta.4
+github.com/go-redis/redis/v7
+github.com/go-redis/redis/v7/internal
+github.com/go-redis/redis/v7/internal/consistenthash
+github.com/go-redis/redis/v7/internal/hashtag
+github.com/go-redis/redis/v7/internal/pool
+github.com/go-redis/redis/v7/internal/proto
+github.com/go-redis/redis/v7/internal/util
+# github.com/gorilla/context v1.1.1
+github.com/gorilla/context
+# github.com/gorilla/handlers v1.4.2
+github.com/gorilla/handlers
+# github.com/gorilla/mux v1.6.2
+github.com/gorilla/mux
+# github.com/jinzhu/gorm v1.9.11
+github.com/jinzhu/gorm
+github.com/jinzhu/gorm/dialects/postgres
+# github.com/jinzhu/inflection v1.0.0
+github.com/jinzhu/inflection
+# github.com/konsorten/go-windows-terminal-sequences v1.0.1
+github.com/konsorten/go-windows-terminal-sequences
+# github.com/lib/pq v1.1.1
+github.com/lib/pq
+github.com/lib/pq/hstore
+github.com/lib/pq/oid
+github.com/lib/pq/scram
+# github.com/sirupsen/logrus v1.4.2
+github.com/sirupsen/logrus
+# github.com/streadway/amqp v0.0.0-20190827072141-edfb9018d271
+github.com/streadway/amqp
+# go.uber.org/dig v1.8.0
+go.uber.org/dig
+go.uber.org/dig/internal/digreflect
+go.uber.org/dig/internal/dot
+# golang.org/x/lint v0.0.0-20190930215403-16217165b5de
+golang.org/x/lint
+golang.org/x/lint/golint
+# golang.org/x/sys v0.0.0-20190606165138-5da285871e9c
+golang.org/x/sys/unix
+# golang.org/x/tools v0.0.0-20191030062658-86caa796c7ab
+golang.org/x/tools/go/ast/astutil
+golang.org/x/tools/go/gcexportdata
+golang.org/x/tools/go/internal/gcimporter

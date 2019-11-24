@@ -1,0 +1,69 @@
+version: '3'
+services:
+  elasticsearch:
+    container_name: 'elasticsearch'
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.4.2'
+    ports:
+      - '9200:9200'
+    environment:
+      - discovery.type=single-node
+  postgres:
+    container_name: 'postgres'
+    image: 'postgres:12.1'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=johndoe
+      - POSTGRES_PASSWORD=pwd0123456789
+      - POSTGRES_DB=newsapi
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: 'rabbitmq:3.8.1-management'
+    hostname: 'rabbitmq'
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+      - RABBITMQ_DEFAULT_USER=johndoe
+      - RABBITMQ_DEFAULT_PASS=pwd0123456789
+      - RABBITMQ_DEFAULT_VHOST=/
+  redis:
+    container_name: 'redis'
+    image: 'redis:5.0.7'
+    ports:
+      - '6379:6379'
+  newsservice:
+    container_name: 'newsservice'
+    build:
+      context: .
+      dockerfile: cmd/newsservice/Dockerfile
+    depends_on:
+      - elasticsearch
+      - postgres
+      - rabbitmq
+      - redis
+    ports:
+      - '8080:8080'
+    environment:
+      SERVER_ADDRESS: ':8080'
+      POSTGRES_CONNECTION_STRING: 'host=postgres port=5432 user=johndoe dbname=newsapi sslmode=disable password=pwd0123456789'
+      ES_CONNECTION_STRING: 'http://elasticsearch:9200'
+      REDIS_CONNECTION_STRING: 'redis://redis:6379'
+      AMQP_CONNECTION_STRING: 'amqp://johndoe:pwd0123456789@rabbitmq:5672'
+  storageservice:
+    container_name: 'storageservice'
+    build:
+      context: .
+      dockerfile: cmd/storageservice/Dockerfile
+    depends_on:
+      - elasticsearch
+      - postgres
+      - rabbitmq
+      - redis
+    environment:
+      SERVER_ADDRESS: ':8080'
+      POSTGRES_CONNECTION_STRING: 'host=postgres port=5432 user=johndoe dbname=newsapi sslmode=disable password=pwd0123456789'
+      ES_CONNECTION_STRING: 'http://elasticsearch:9200'
+      REDIS_CONNECTION_STRING: 'redis://redis:6379'
+      AMQP_CONNECTION_STRING: 'amqp://johndoe:pwd0123456789@rabbitmq:5672'
