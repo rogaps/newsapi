@@ -61,7 +61,7 @@ func (u *NewsUsecase) CreateNews(news *model.News) error {
 		ID:      news.ID,
 		Created: news.Created,
 	}
-	log.Infof("Store news ID: %s, created: %s to ES.\n", news.ID, news.Created)
+	log.Infof("Store news ID: %d, created: %s to ES.\n", news.ID, news.Created)
 	docID := strconv.Itoa(doc.ID)
 	err := u.esStore.Create(docID, doc)
 	return err

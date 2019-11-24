@@ -12,6 +12,7 @@ require (
 	github.com/jinzhu/gorm v1.9.11
 	github.com/sirupsen/logrus v1.4.2
 	github.com/streadway/amqp v0.0.0-20190827072141-edfb9018d271
+	github.com/stretchr/testify v1.4.0
 	github.com/vmihailenco/msgpack/v4 v4.2.1 // indirect
 	github.com/vmihailenco/tagparser v0.1.1 // indirect
 	go.uber.org/dig v1.8.0
