@@ -12,5 +12,10 @@ require (
 	github.com/jinzhu/gorm v1.9.11
 	github.com/sirupsen/logrus v1.4.2
 	github.com/streadway/amqp v0.0.0-20190827072141-edfb9018d271
+	github.com/vmihailenco/msgpack/v4 v4.2.1 // indirect
+	github.com/vmihailenco/tagparser v0.1.1 // indirect
 	go.uber.org/dig v1.8.0
+	golang.org/x/net v0.0.0-20191119073136-fc4aabc6c914 // indirect
+	google.golang.org/appengine v1.6.5 // indirect
+	gopkg.in/eapache/go-resiliency.v1 v1.2.0
 )

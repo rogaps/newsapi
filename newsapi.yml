@@ -82,10 +82,6 @@ paths:
       responses:
         201:
           description: News created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/News'
 
 components:
   schemas:

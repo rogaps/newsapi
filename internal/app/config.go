@@ -1,4 +1,4 @@
-package newsapi
+package app
 
 import (
 	"encoding/json"
@@ -20,7 +20,7 @@ type Config struct {
 		ConnectionString []string `json:"connectionString" env:"ES_CONNECTION_STRING" envSeparator:";"`
 	} `json:"elasticsearch"`
 	Redis struct {
-		ConnectionString string `json:"connectionString" env:"REDIS_CONNECTION_STRING"`
+		Address string `json:"address" env:"REDIS_ADDRESS"`
 	} `json:"redis"`
 	AMQP struct {
 		ConnectionString string `json:"connectionString" env:"AMQP_CONNECTION_STRING"`

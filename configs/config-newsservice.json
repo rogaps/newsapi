@@ -9,7 +9,7 @@
         "connectionString": ["http://localhost:9200"]
     },
     "redis": {
-        "connectionString": "redis://localhost:6379"
+        "address": "localhost:6379"
     },
     "amqp": {
         "connectionString": "amqp://johndoe:pwd0123456789@localhost:5672"

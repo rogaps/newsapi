@@ -2,10 +2,12 @@ package messaging
 
 import (
 	"fmt"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 
 	"github.com/streadway/amqp"
+	"gopkg.in/eapache/go-resiliency.v1/retrier"
 )
 
 // AMQPClient represents AMQP client
@@ -18,8 +20,15 @@ func Connect(connectionString string) (*AMQPClient, error) {
 	if connectionString == "" {
 		return nil, fmt.Errorf("failed to connect to broker: connection string is empty")
 	}
+	var conn *amqp.Connection
+	var err error
+	r := retrier.New(retrier.ConstantBackoff(5, time.Second), nil)
 
-	conn, err := amqp.Dial(fmt.Sprintf("%s/", connectionString))
+	err = r.Run(func() error {
+		conn, err = amqp.Dial(fmt.Sprintf("%s/", connectionString))
+		return err
+	})
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to broker: %s", err)
 	}

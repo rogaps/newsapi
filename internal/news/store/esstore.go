@@ -1,16 +1,20 @@
-package elasticsearch
+package store
 
 import (
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/elastic/go-elasticsearch/v7/esutil"
 )
+
+type ESStore interface {
+	Search(map[string]interface{}) (*SearchResults, error)
+	Create(string, interface{}) error
+}
 
 type SearchResults struct {
 	Total int    `json:"total"`
@@ -21,14 +25,14 @@ type Hit struct {
 	ID int `json:"id"`
 }
 
-// ESClient represents elasticsearch client on specific index
-type ESClient struct {
+// ESStore represents elasticsearch client on specific index
+type esStore struct {
 	es        *elasticsearch.Client
 	indexName string
 }
 
-// Connect connects to elasticsearch and creates a client
-func Connect(indexName string, addresses []string, username, password string) (*ESClient, error) {
+// NewESSTore connects to elasticsearch and creates a client
+func NewESSTore(indexName string, addresses []string, username, password string) (ESStore, error) {
 	config := elasticsearch.Config{
 		Addresses: addresses,
 	}
@@ -38,29 +42,17 @@ func Connect(indexName string, addresses []string, username, password string) (*
 	if len(password) > 0 {
 		config.Password = password
 	}
-	return ConnectWithConfig(indexName, config)
+	return Connect(indexName, config)
 }
 
-// ConnectWithConfig connects to elasticsearch and creates a client
-func ConnectWithConfig(indexName string, config elasticsearch.Config) (*ESClient, error) {
+// Connect connects to elasticsearch and creates a client
+func Connect(indexName string, config elasticsearch.Config) (ESStore, error) {
 	es, err := elasticsearch.NewClient(config)
-	return &ESClient{es, indexName}, err
-}
-
-// CreateIndex creates index with mapping in elasticsearch
-func (c *ESClient) CreateIndex(mapping string) error {
-	res, err := c.es.Indices.Create(c.indexName, c.es.Indices.Create.WithBody(strings.NewReader(mapping)))
-	if err != nil {
-		return err
-	}
-	if res.IsError() {
-		return fmt.Errorf("error: %s", res)
-	}
-	return nil
+	return &esStore{es, indexName}, err
 }
 
 // Create creates a document in elasticsearch
-func (s *ESClient) Create(docID string, doc interface{}) error {
+func (s *esStore) Create(docID string, doc interface{}) error {
 	payload, err := json.Marshal(doc)
 	if err != nil {
 		return fmt.Errorf("failed to create document: %s", err)
@@ -88,7 +80,7 @@ func (s *ESClient) Create(docID string, doc interface{}) error {
 	return nil
 }
 
-func (s *ESClient) Search(query map[string]interface{}) (*SearchResults, error) {
+func (s *esStore) Search(query map[string]interface{}) (*SearchResults, error) {
 	var results SearchResults
 
 	res, err := s.es.Search(
